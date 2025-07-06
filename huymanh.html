@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>🔒 HUY MẠNH</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    #login, #ghost {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 50px 30px;
+      text-align: center;
+      color: white;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-box.shake {
+      animation: shake 0.3s ease-in-out;
+    }
+
+    .login-box h1 {
+      font-size: 48px;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 10px black;
+    }
+
+    .login-box input {
+      padding: 15px;
+      width: 280px;
+      font-size: 20px;
+      border-radius: 12px;
+      border: none;
+      margin-bottom: 20px;
+      outline: none;
+    }
+
+    .login-box button {
+      padding: 14px 28px;
+      font-size: 18px;
+      border-radius: 12px;
+      background: crimson;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      background: darkred;
+    }
+
+    #error {
+      color: yellow;
+      margin-top: 15px;
+      font-style: italic;
+    }
+
+    #ghost {
+      display: none;
+      background: black;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #ghost.shake {
+      animation: ghostShake 0.3s ease-in-out 10;
+    }
+
+    #ghost img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+
+    @keyframes ghostShake {
+      0%, 100% { transform: translate(0, 0); }
+      10% { transform: translate(-10px, 0); }
+      20% { transform: translate(10px, 0); }
+      30% { transform: translate(-10px, 10px); }
+      40% { transform: translate(10px, -10px); }
+      50% { transform: translate(-5px, 5px); }
+      60% { transform: translate(5px, -5px); }
+      70% { transform: translate(-5px, 5px); }
+      80% { transform: translate(5px, -5px); }
+      90% { transform: translate(0, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Màn hình đăng nhập -->
+  <div id="login">
+    <div class="login-box" id="loginBox">
+      <h1>HUY MẠNH</h1>
+      <input type="password" id="password" placeholder="Nhập mật khẩu..."><br>
+      <button onclick="checkPassword()">Vào</button>
+      <p id="error"></p>
+    </div>
+  </div>
+
+  <!-- Màn hình ma hiện -->
+  <div id="ghost">
+    <img src="https://i.pinimg.com/originals/8e/53/4e/8e534ef76910c00b6111c8349f962bf6.jpg" alt="Ma Dọa">
+  </div>
+
+  <!-- Âm thanh dọa -->
+  <audio id="scream" preload="auto">
+    <source src="https://www.myinstants.com/media/sounds/ghost-sound-effect.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const correctPassword = "huymanh";
+
+    function checkPassword() {
+      const pass = document.getElementById("password").value;
+      const box = document.getElementById("loginBox");
+      const error = document.getElementById("error");
+
+      if (pass === correctPassword) {
+        document.getElementById("login").style.display = "none";
+        const ghost = document.getElementById("ghost");
+        ghost.style.display = "flex";
+        ghost.classList.add("shake");
+        document.getElementById("scream").play();
+      } else {
+        error.innerText = "Sai mật khẩu rồi!";
+        box.classList.add("shake");
+        setTimeout(() => box.classList.remove("shake"), 300);
+      }
+    }
+  </script>
+
+</body>
+</html>
