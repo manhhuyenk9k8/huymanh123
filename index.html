@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Logic Compare</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .container {
+            display: flex;
+            gap: 50px;
+            margin-bottom: 30px;
+        }
+
+        .box {
+            padding: 30px;
+            border: 2px solid;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .red { border-color: #ff0000; color: #ff0000; }
+        .blue { border-color: #0080ff; color: #0080ff; }
+
+        h2 { font-size: 2.5rem; margin-bottom: 20px; }
+
+        input {
+            background: transparent;
+            border: 1px solid currentColor;
+            color: inherit;
+            font-size: 2rem;
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 0 10px #0f0;
+        }
+
+        button:hover { background: #0c0; }
+
+        #result {
+            margin-top: 30px;
+            font-size: 5rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .glitch { animation: pulse 1s infinite; }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Bên Đỏ (P) -->
+        <div class="box red">
+            <h2>P</h2>
+            <input type="number" id="p1" placeholder="N1">
+            <input type="number" id="p2" placeholder="N2">
+        </div>
+
+        <!-- Bên Xanh (B) -->
+        <div class="box blue">
+            <h2>B</h2>
+            <input type="number" id="b1" placeholder="N1">
+            <input type="number" id="b2" placeholder="N2">
+        </div>
+    </div>
+
+    <button onclick="calculate()">EXECUTE SYSTEM</button>
+
+    <div id="result"></div>
+
+    <script>
+        function processScore(n1, n2) {
+            let sum = (parseInt(n1) || 0) + (parseInt(n2) || 0);
+            if (sum > 10) {
+                // Lấy hàng đơn vị cộng hàng chục
+                let newSum = (sum % 10) + Math.floor(sum / 10);
+                // Nếu vẫn 2 chữ số thì lấy hàng đơn vị
+                return newSum % 10;
+            }
+            return sum % 10;
+        }
+
+        function calculate() {
+            const scoreP = processScore(document.getElementById('p1').value, document.getElementById('p2').value);
+            const scoreB = processScore(document.getElementById('b1').value, document.getElementById('b2').value);
+            
+            const resultDiv = document.getElementById('result');
+            
+            if (scoreP > scoreB) {
+                resultDiv.innerText = "P WINNER";
+                resultDiv.style.color = "#ff0000";
+            } else if (scoreB > scoreP) {
+                resultDiv.innerText = "B WINNER";
+                resultDiv.style.color = "#0080ff";
+            } else {
+                resultDiv.innerText = "H";
+                resultDiv.style.color = "#0f0";
+            }
+            
+            resultDiv.classList.add('glitch');
+        }
+    </script>
+</body>
+</html>
